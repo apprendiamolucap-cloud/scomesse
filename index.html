@@ -2,87 +2,230 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Pixel Arcade - Gioca e Guadagna</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦆 DuckyBet - Scommesse & Giochi</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Press+Start+2P&display=swap');
 
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Fredoka', sans-serif;
   }
 
   body {
-    background: #0a0a1a;
-    color: #fff;
+    background: linear-gradient(135deg, #87CEEB 0%, #FFE55C 50%, #FFB347 100%);
     min-height: 100vh;
-    background-image: 
-      linear-gradient(rgba(10,10,26,0.9), rgba(10,10,26,0.9)),
-      repeating-linear-gradient(0deg, #1a1a3a 0px, #1a1a3a 2px, #0a0a1a 2px, #0a0a1a 4px);
+    color: #333;
     padding: 20px;
-    image-rendering: pixelated;
+    background-attachment: fixed;
   }
 
-  header {
-    text-align: center;
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.3) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ===== LOGIN SCREEN ===== */
+  .login-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #4A90E2, #87CEEB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
     padding: 20px;
-    border: 4px solid #ff00ff;
-    background: #1a0033;
-    box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff33;
-    margin-bottom: 30px;
+  }
+
+  .login-screen.hidden {
+    display: none;
+  }
+
+  .login-box {
+    background: #FFF9E6;
+    border: 5px solid #FFD93D;
+    border-radius: 30px;
+    padding: 40px 30px;
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    animation: bounceIn 0.6s ease;
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .login-duck {
+    font-size: 90px;
+    display: block;
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .login-box h1 {
+    color: #F5A623;
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 #FFD93D;
+  }
+
+  .login-box p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 14px;
+  }
+
+  .google-btn {
+    background: #fff;
+    color: #444;
+    border: 3px solid #ddd;
+    border-radius: 50px;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    transition: all 0.2s;
+    font-family: 'Fredoka', sans-serif;
+  }
+
+  .google-btn:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .google-btn:active {
+    transform: translateY(0);
+  }
+
+  .google-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: #FFF9E6;
+    border: 5px solid #FFD93D;
+    border-radius: 25px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     position: relative;
   }
 
   header h1 {
-    font-size: 24px;
-    color: #ffff00;
-    text-shadow: 3px 3px 0 #ff00ff, 6px 6px 0 #00ffff;
-    letter-spacing: 2px;
-    animation: blink 1.5s infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.85; }
-  }
-
-  header p {
-    font-size: 10px;
-    color: #00ffff;
-    margin-top: 15px;
-  }
-
-  .balance-bar {
+    color: #F5A623;
+    font-size: 38px;
+    text-shadow: 3px 3px 0 #FFD93D;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 30px;
-    padding: 15px;
-    background: #000;
-    border: 3px solid #00ff00;
-    margin-bottom: 30px;
-    box-shadow: 0 0 15px #00ff00;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
-  .balance-item {
-    text-align: center;
-    font-size: 12px;
-  }
-
-  .balance-item .label {
+  header .subtitle {
     color: #888;
-    font-size: 8px;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 600;
+  }
+
+  .user-info {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #FFD93D;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .user-info:hover {
+    background: #F5A623;
+    color: #fff;
+  }
+
+  /* ===== BALANCE BAR ===== */
+  .balance-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .balance-card {
+    background: #FFF9E6;
+    border: 4px solid #FFD93D;
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 6px 0 #E8B923;
+    transition: transform 0.2s;
+  }
+
+  .balance-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .balance-card .icon {
+    font-size: 30px;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
   }
 
-  .balance-item .value {
-    color: #00ff00;
-    font-size: 16px;
-    text-shadow: 0 0 10px #00ff00;
+  .balance-card .label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
   }
 
+  .balance-card .value {
+    font-size: 22px;
+    color: #F5A623;
+    font-weight: 700;
+    margin-top: 3px;
+  }
+
+  /* ===== TABS ===== */
   .tabs {
     display: flex;
     justify-content: center;
@@ -92,35 +235,34 @@
   }
 
   .tab-btn {
-    background: #1a1a3a;
-    color: #fff;
-    border: 3px solid #00ffff;
-    padding: 12px 20px;
-    font-size: 10px;
+    background: #FFF9E6;
+    color: #F5A623;
+    border: 4px solid #FFD93D;
+    border-radius: 20px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 700;
     cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
+    font-family: 'Fredoka', sans-serif;
     transition: all 0.2s;
-    text-transform: uppercase;
+    box-shadow: 0 5px 0 #E8B923;
   }
 
   .tab-btn:hover {
-    background: #00ffff;
-    color: #000;
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 #ff00ff;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #E8B923;
   }
 
   .tab-btn.active {
-    background: #ff00ff;
-    border-color: #ffff00;
+    background: #F5A623;
     color: #fff;
-    box-shadow: 0 0 15px #ff00ff;
+    border-color: #E8B923;
+    box-shadow: 0 5px 0 #B87A0F;
   }
 
+  /* ===== SECTIONS ===== */
   .section {
     display: none;
-    max-width: 900px;
-    margin: 0 auto;
   }
 
   .section.active {
@@ -129,73 +271,59 @@
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* GAME SECTION */
-  .game-container {
-    background: #000;
-    border: 4px solid #ffff00;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 0 25px #ffff00;
+  .panel {
+    background: #FFF9E6;
+    border: 5px solid #FFD93D;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
   }
 
-  .slot-display {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 25px 0;
-    flex-wrap: wrap;
-  }
-
-  .slot {
-    width: 90px;
-    height: 90px;
-    background: #1a0033;
-    border: 4px solid #ff00ff;
+  .panel h2 {
+    color: #F5A623;
+    font-size: 24px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    box-shadow: inset 0 0 20px #ff00ff55;
+    gap: 10px;
   }
 
-  .slot.spinning {
-    animation: spin 0.1s infinite;
+  .panel .desc {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-weight: 600;
   }
 
-  @keyframes spin {
-    0% { transform: translateY(-3px); }
-    50% { transform: translateY(3px); }
-    100% { transform: translateY(-3px); }
-  }
-
+  /* ===== BUTTONS ===== */
   .btn {
-    background: #ff00ff;
+    background: #F5A623;
     color: #fff;
-    border: 3px solid #ffff00;
-    padding: 15px 25px;
-    font-size: 12px;
+    border: none;
+    border-radius: 15px;
+    padding: 13px 25px;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
-    margin: 5px;
+    font-family: 'Fredoka', sans-serif;
     transition: all 0.15s;
-    text-transform: uppercase;
-    box-shadow: 4px 4px 0 #000;
+    box-shadow: 0 5px 0 #B87A0F;
+    margin: 4px;
   }
 
   .btn:hover:not(:disabled) {
-    background: #ffff00;
-    color: #000;
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 #000;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #B87A0F;
   }
 
   .btn:active:not(:disabled) {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #000;
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #B87A0F;
   }
 
   .btn:disabled {
@@ -203,396 +331,708 @@
     cursor: not-allowed;
   }
 
-  .btn.green { background: #00aa00; }
-  .btn.green:hover:not(:disabled) { background: #00ff00; color: #000; }
-  .btn.blue { background: #0055aa; }
-  .btn.blue:hover:not(:disabled) { background: #00aaff; color: #000; }
+  .btn.green { background: #4CAF50; box-shadow: 0 5px 0 #2E7D32; }
+  .btn.green:hover:not(:disabled) { box-shadow: 0 7px 0 #2E7D32; }
+  .btn.green:active:not(:disabled) { box-shadow: 0 2px 0 #2E7D32; }
 
-  .message {
-    font-size: 11px;
-    min-height: 30px;
+  .btn.blue { background: #4A90E2; box-shadow: 0 5px 0 #2E5F9E; }
+  .btn.blue:hover:not(:disabled) { box-shadow: 0 7px 0 #2E5F9E; }
+  .btn.blue:active:not(:disabled) { box-shadow: 0 2px 0 #2E5F9E; }
+
+  .btn.red { background: #E74C3C; box-shadow: 0 5px 0 #A93226; }
+  .btn.red:hover:not(:disabled) { box-shadow: 0 7px 0 #A93226; }
+
+  .btn.purple { background: #9B59B6; box-shadow: 0 5px 0 #6C3483; }
+  .btn.purple:hover:not(:disabled) { box-shadow: 0 7px 0 #6C3483; }
+
+  /* ===== BET INPUT ===== */
+  .bet-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
     margin: 15px 0;
-    color: #ffff00;
-    text-shadow: 0 0 10px #ffff00;
   }
 
-  .message.win { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
-  .message.lose { color: #ff3333; text-shadow: 0 0 10px #ff3333; }
-
   .bet-input {
-    background: #000;
-    color: #00ff00;
-    border: 3px solid #00ff00;
+    background: #fff;
+    color: #F5A623;
+    border: 4px solid #FFD93D;
+    border-radius: 15px;
     padding: 12px;
-    font-size: 12px;
-    font-family: 'Press Start 2P', monospace;
-    width: 150px;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Fredoka', sans-serif;
+    width: 130px;
     text-align: center;
-    margin: 10px;
   }
 
   .bet-input:focus {
     outline: none;
-    box-shadow: 0 0 15px #00ff00;
+    border-color: #F5A623;
   }
 
-  /* CASE SECTION */
-  .houses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+  .bet-label {
+    font-size: 15px;
+    color: #888;
+    font-weight: 700;
   }
 
-  .house-card {
-    background: #1a1a3a;
-    border: 4px solid #00ffff;
-    padding: 20px;
-    text-align: center;
-    transition: all 0.3s;
-    position: relative;
-  }
-
-  .house-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px #00ffff55;
-  }
-
-  .house-card.owned {
-    border-color: #00ff00;
-    box-shadow: 0 0 20px #00ff0055;
-  }
-
-  .house-emoji {
-    font-size: 60px;
+  .quick-bets {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
     margin: 10px 0;
-    filter: drop-shadow(0 0 10px #ffff00);
   }
 
-  .house-name {
+  .quick-bet {
+    background: #fff;
+    color: #F5A623;
+    border: 3px solid #FFD93D;
+    border-radius: 12px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .quick-bet:hover {
+    background: #FFD93D;
+    color: #fff;
+  }
+
+  /* ===== MESSAGE ===== */
+  .message {
+    font-size: 17px;
+    min-height: 30px;
+    margin: 15px 0;
+    color: #F5A623;
+    font-weight: 700;
+    text-align: center;
+    padding: 12px;
+    border-radius: 15px;
+    transition: all 0.3s;
+  }
+
+  .message.win { 
+    color: #2E7D32; 
+    background: #C8E6C9;
+    animation: pop 0.5s;
+  }
+  .message.lose { 
+    color: #C0392B; 
+    background: #FFCDD2;
+  }
+  .message.info {
+    color: #2E5F9E;
+    background: #BBDEFB;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  /* ===== CALCIO ===== */
+  .match-list {
+    display: grid;
+    gap: 15px;
+  }
+
+  .match-card {
+    background: #fff;
+    border: 3px solid #FFD93D;
+    border-radius: 18px;
+    padding: 18px;
+    transition: all 0.2s;
+  }
+
+  .match-card:hover {
+    border-color: #F5A623;
+  }
+
+  .match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .league {
     font-size: 12px;
-    color: #ffff00;
-    margin-bottom: 10px;
+    color: #888;
+    font-weight: 700;
+    background: #FFF9E6;
+    padding: 4px 10px;
+    border-radius: 10px;
   }
 
-  .house-desc {
-    font-size: 8px;
-    color: #aaa;
-    line-height: 1.8;
+  .match-time {
+    font-size: 12px;
+    color: #F5A623;
+    font-weight: 700;
+  }
+
+  .teams {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     margin: 15px 0;
-    min-height: 40px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    gap: 10px;
   }
 
-  .house-price {
+  .team {
+    flex: 1;
+    text-align: center;
+  }
+
+  .vs {
+    color: #F5A623;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 0 10px;
+  }
+
+  .odds {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .odd-btn {
+    background: #FFF9E6;
+    border: 3px solid #FFD93D;
+    border-radius: 12px;
+    padding: 12px 8px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    transition: all 0.15s;
+    color: #333;
+  }
+
+  .odd-btn:hover {
+    background: #FFD93D;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .odd-btn.selected {
+    background: #F5A623;
+    color: #fff;
+    border-color: #B87A0F;
+    box-shadow: 0 4px 0 #B87A0F;
+  }
+
+  .odd-label {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 3px;
+  }
+
+  .odd-btn.selected .odd-label {
+    color: #FFE9B0;
+  }
+
+  .odd-value {
+    display: block;
+    font-size: 16px;
+  }
+
+  /* ===== CAVALLI ===== */
+  .race-track {
+    background: linear-gradient(to bottom, #8BC34A, #558B2F);
+    border: 5px solid #FFD93D;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .race-track::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 40px,
+      rgba(255,255,255,0.15) 40px,
+      rgba(255,255,255,0.15) 42px
+    );
+    pointer-events: none;
+  }
+
+  .lane {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    margin: 6px 0;
+    position: relative;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding-left: 10px;
+  }
+
+  .lane-num {
+    font-weight: 700;
+    color: #fff;
+    background: #F5A623;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
-    color: #00ff00;
-    margin: 15px 0;
-    text-shadow: 0 0 10px #00ff00;
+    margin-right: 10px;
+    z-index: 2;
   }
 
-  .house-income {
-    font-size: 8px;
-    color: #00ffff;
+  .horse {
+    font-size: 32px;
+    position: absolute;
+    transition: left 0.1s linear;
+    left: 50px;
+    z-index: 1;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+  }
+
+  .horse.winner {
+    animation: hop 0.3s infinite;
+  }
+
+  @keyframes hop {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-8px) scale(1.1); }
+  }
+
+  .finish-line {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background-image: repeating-linear-gradient(
+      45deg,
+      #000 0, #000 5px,
+      #fff 5px, #fff 10px
+    );
+    border-radius: 4px;
+  }
+
+  .horse-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+  }
+
+  .horse-option {
+    background: #fff;
+    border: 3px solid #FFD93D;
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.15s;
+    font-family: 'Fredoka', sans-serif;
+  }
+
+  .horse-option:hover {
+    transform: translateY(-3px);
+    border-color: #F5A623;
+  }
+
+  .horse-option.selected {
+    background: #F5A623;
+    color: #fff;
+    border-color: #B87A0F;
+    box-shadow: 0 5px 0 #B87A0F;
+  }
+
+  .horse-option .h-emoji {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .horse-option .h-name {
+    font-size: 12px;
+    color: inherit;
+  }
+
+  .horse-option .h-odds {
+    font-size: 13px;
+    margin-top: 4px;
+    color: #F5A623;
+  }
+
+  .horse-option.selected .h-odds {
+    color: #FFE9B0;
+  }
+
+  /* ===== PAPERE GIOCO ===== */
+  .duck-area {
+    background: linear-gradient(to bottom, #87CEEB 0%, #B3E5FC 60%, #4FC3F7 100%);
+    border: 5px solid #FFD93D;
+    border-radius: 20px;
+    height: 380px;
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0;
+    cursor: crosshair;
+    user-select: none;
+  }
+
+  .duck-area::after {
+    content: '🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+    text-align: center;
+    opacity: 0.5;
+    letter-spacing: -5px;
+  }
+
+  .cloud {
+    position: absolute;
+    font-size: 40px;
+    opacity: 0.8;
+    animation: cloudMove 20s linear infinite;
+  }
+
+  @keyframes cloudMove {
+    from { left: -60px; }
+    to { left: 110%; }
+  }
+
+  .duck {
+    position: absolute;
+    font-size: 50px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    user-select: none;
+    filter: drop-shadow(2px 3px 3px rgba(0,0,0,0.3));
+    z-index: 3;
+  }
+
+  .duck:hover {
+    transform: scale(1.15);
+  }
+
+  .duck.hit {
+    animation: duckHit 0.4s forwards;
+    pointer-events: none;
+  }
+
+  @keyframes duckHit {
+    0% { transform: scale(1.3) rotate(0deg); }
+    100% { transform: scale(0) rotate(360deg); opacity: 0; }
+  }
+
+  .duck.golden {
+    filter: drop-shadow(0 0 15px gold) drop-shadow(2px 3px 3px rgba(0,0,0,0.3));
+    animation: goldenGlow 0.6s infinite alternate;
+  }
+
+  @keyframes goldenGlow {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+
+  .duck-stats {
+    display: flex;
+    justify-content: space-around;
+    background: #FFF9E6;
+    border: 3px solid #FFD93D;
+    border-radius: 15px;
+    padding: 12px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .duck-stat {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .duck-stat .s-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+  }
+
+  .duck-stat .s-value {
+    font-size: 20px;
+    color: #F5A623;
+  }
+
+  .game-over-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 15px;
+    z-index: 10;
+  }
+
+  .game-over-overlay h3 {
+    font-size: 32px;
+    color: #FFD93D;
     margin-bottom: 15px;
   }
 
-  .owned-badge {
-    position: absolute;
-    top: -12px;
-    right: -12px;
-    background: #00ff00;
-    color: #000;
-    padding: 5px 10px;
-    font-size: 8px;
-    border: 2px solid #000;
+  .game-over-overlay p {
+    font-size: 20px;
+    margin-bottom: 20px;
   }
 
-  /* RESET */
-  .reset-area {
+  /* ===== BET SLIP ===== */
+  .betslip {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #FFF9E6;
+    border: 5px solid #F5A623;
+    border-radius: 20px;
+    padding: 15px;
+    width: 280px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 100;
+    display: none;
+  }
+
+  .betslip.visible {
+    display: block;
+    animation: slideUp 0.3s;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .betslip h3 {
+    color: #F5A623;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .betslip .close-slip {
+    background: #E74C3C;
+    color: #fff;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .slip-item {
+    background: #fff;
+    border: 2px solid #FFD93D;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .slip-item .slip-teams {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .slip-item .slip-pick {
+    color: #888;
+    font-size: 12px;
+  }
+
+  .slip-item .slip-odds {
+    color: #F5A623;
+    font-weight: 700;
+  }
+
+  .slip-total {
+    background: #FFD93D;
+    border-radius: 12px;
+    padding: 10px;
     text-align: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 2px dashed #333;
+    margin: 10px 0;
+    font-weight: 700;
+    color: #B87A0F;
   }
 
+  /* ===== FOOTER ===== */
   footer {
     text-align: center;
     margin-top: 40px;
-    font-size: 8px;
+    font-size: 12px;
     color: #666;
     padding: 20px;
+    font-weight: 600;
   }
 
-  @media (max-width: 600px) {
-    header h1 { font-size: 14px; }
-    .slot { width: 70px; height: 70px; font-size: 30px; }
-    .btn { font-size: 9px; padding: 12px 15px; }
-    .balance-item .value { font-size: 12px; }
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 700px) {
+    header h1 { font-size: 24px; }
+    .user-info { position: static; display: inline-flex; margin-top: 10px; }
+    .balance-card .value { font-size: 18px; }
+    .btn { font-size: 14px; padding: 11px 18px; }
+    .betslip { width: calc(100% - 40px); right: 20px; left: 20px; }
+    .duck-area { height: 300px; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>★ PIXEL ARCADE ★</h1>
-  <p>GIOCA • VINCI • COMPRA CASE</p>
-</header>
-
-<div class="balance-bar">
-  <div class="balance-item">
-    <span class="label">SALDO</span>
-    <span class="value">€<span id="balance">100</span></span>
-  </div>
-  <div class="balance-item">
-    <span class="label">VINCITE TOTALI</span>
-    <span class="value">€<span id="totalWon">0</span></span>
-  </div>
-  <div class="balance-item">
-    <span class="label">PROPRIETÀ</span>
-    <span class="value"><span id="housesOwned">0</span></span>
+<!-- ===== LOGIN ===== -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <span class="login-duck">🦆</span>
+    <h1>DuckyBet</h1>
+    <p>Accedi per iniziare a giocare e scommettere!</p>
+    <button class="google-btn" onclick="loginGoogle()">
+      <svg class="google-icon" viewBox="0 0 48 48">
+        <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+        <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+        <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+        <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571.001-.001.002-.001.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+      </svg>
+      Accedi con Google
+    </button>
   </div>
 </div>
 
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('game')">🎰 SLOT MACHINE</button>
-  <button class="tab-btn" onclick="switchTab('houses')">🏠 CASE</button>
-</div>
+<!-- ===== APP ===== -->
+<div class="container" id="appContainer" style="display:none;">
 
-<!-- SEZIONE GIOCO -->
-<div class="section active" id="game-section">
-  <div class="game-container">
-    <h2 style="font-size:14px; color:#ffff00; margin-bottom:10px;">🍒 SLOT MACHINE 🍒</h2>
-    <p style="font-size:9px; color:#aaa; margin-bottom:20px;">3 uguali = VINCI IL DOPPIO!</p>
-
-    <div class="slot-display">
-      <div class="slot" id="slot1">❓</div>
-      <div class="slot" id="slot2">❓</div>
-      <div class="slot" id="slot3">❓</div>
+  <header>
+    <div class="user-info" onclick="logout()">
+      <span id="userAvatar">🦆</span>
+      <span id="userName">Ospite</span>
+      <span style="opacity:0.6; font-size:11px;">(esci)</span>
     </div>
+    <h1>🦆 DuckyBet 🦆</h1>
+    <p class="subtitle">Scommesse sportive • Corse dei cavalli • Caccia alle papere</p>
+  </header>
 
-    <div>
-      <label style="font-size:9px; color:#aaa;">PUNTATA (€):</label><br>
-      <input type="number" class="bet-input" id="bet" value="10" min="1">
+  <div class="balance-bar">
+    <div class="balance-card">
+      <span class="icon">💰</span>
+      <div class="label">Saldo</div>
+      <div class="value">€<span id="balance">100</span></div>
     </div>
-
-    <div>
-      <button class="btn green" id="spinBtn" onclick="spin()">▶ GIOCA</button>
-      <button class="btn blue" onclick="allIn()">💰 ALL IN</button>
+    <div class="balance-card">
+      <span class="icon">🏆</span>
+      <div class="label">Vincite Totali</div>
+      <div class="value">€<span id="totalWon">0</span></div>
     </div>
-
-    <div class="message" id="message">Inserisci la puntata e premi GIOCA!</div>
+    <div class="balance-card">
+      <span class="icon">🎯</span>
+      <div class="label">Scommesse Vinte</div>
+      <div class="value"><span id="betsWon">0</span>/<span id="betsTotal">0</span></div>
+    </div>
+    <div class="balance-card">
+      <span class="icon">🦆</span>
+      <div class="label">Papere Catturate</div>
+      <div class="value"><span id="ducksCaught">0</span></div>
+    </div>
   </div>
-</div>
 
-<!-- SEZIONE CASE -->
-<div class="section" id="houses-section">
-  <div style="text-align:center; margin-bottom:20px;">
-    <h2 style="font-size:14px; color:#00ffff;">🏘️ MERCATO IMMOBILIARE 🏘️</h2>
-    <p style="font-size:9px; color:#aaa; margin-top:10px;">Compra case per aumentare il tuo prestigio!</p>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('calcio', event)">⚽ Calcio</button>
+    <button class="tab-btn" onclick="switchTab('cavalli', event)">🐎 Cavalli</button>
+    <button class="tab-btn" onclick="switchTab('papere', event)">🦆 Papere</button>
   </div>
 
-  <div class="houses-grid" id="housesGrid"></div>
-
-  <div class="reset-area">
-    <button class="btn" style="background:#333; border-color:#666;" onclick="resetGame()">🔄 RESETTA TUTTO</button>
+  <!-- ===== CALCIO ===== -->
+  <div class="section active" id="calcio-section">
+    <div class="panel">
+      <h2>⚽ Schedine Calcio</h2>
+      <p class="desc">Seleziona le tue giocate e crea la schedina. Puoi scegliere multipli!</p>
+      <div class="match-list" id="matchList"></div>
+    </div>
   </div>
-</div>
 
-<footer>
-  © 2025 PIXEL ARCADE — Gioco dimostrativo. Nessun denaro reale.
-</footer>
+  <!-- ===== CAVALLI ===== -->
+  <div class="section" id="cavalli-section">
+    <div class="panel">
+      <h2>🐎 Corse dei Cavalli</h2>
+      <p class="desc">Scegli il tuo cavallo, punta e guarda la corsa!</p>
 
-<script>
-// ====== STATO GIOCO ======
-let state = {
-  balance: 100,
-  totalWon: 0,
-  ownedHouses: []
-};
+      <div class="race-track" id="raceTrack">
+        <div class="finish-line"></div>
+      </div>
 
-// ====== CASE DISPONIBILI ======
-const HOUSES = [
-  { id: 'tenda', name: 'Tenda da Campeggio', emoji: '⛺', price: 50, income: '+1 prestigio', desc: 'Un inizio umile ma dignitoso.' },
-  { id: 'casetta', name: 'Casetta di Legno', emoji: '🛖', price: 150, income: '+3 prestigio', desc: 'Accogliente e rustica.' },
-  { id: 'villetta', name: 'Villetta a Schiera', emoji: '🏠', price: 400, income: '+8 prestigio', desc: 'Perfetta per una famiglia.' },
-  { id: 'villa', name: 'Villa con Giardino', emoji: '🏡', price: 1000, income: '+20 prestigio', desc: 'Piscina e barbecue inclusi!' },
-  { id: 'palazzo', name: 'Palazzo Signorile', emoji: '🏛️', price: 2500, income: '+50 prestigio', desc: 'Eleganza senza compromessi.' },
-  { id: 'castello', name: 'Castello Medievale', emoji: '🏰', price: 6000, income: '+150 prestigio', desc: 'Con fossato e draghi opzionali.' },
-  { id: 'grattacielo', name: 'Grattacielo', emoji: '🏢', price: 15000, income: '+400 prestigio', desc: 'Domina lo skyline della città.' },
-  { id: 'isola', name: 'Isola Privata', emoji: '🏝️', price: 50000, income: '+1500 prestigio', desc: 'Il sogno di ogni miliardario.' }
-];
+      <div class="horse-picker" id="horsePicker"></div>
 
-const SYMBOLS = ['🍒', '🍋', '🔔', '⭐', '💎', '7️⃣'];
+      <div class="bet-row">
+        <span class="bet-label">Puntata: €</span>
+        <input type="number" class="bet-input" id="horseBet" value="20" min="1">
+      </div>
 
-// ====== SALVATAGGIO ======
-function save() {
-  localStorage.setItem('pixelArcade', JSON.stringify(state));
-}
+      <div style="text-align:center; margin-top:10px;">
+        <button class="btn green" id="raceBtn" onclick="startRace()">🏁 VIA!</button>
+      </div>
 
-function load() {
-  const saved = localStorage.getItem('pixelArcade');
-  if (saved) {
-    try { state = JSON.parse(saved); } catch(e) {}
-  }
-}
+      <div class="message" id="raceMessage">Scegli un cavallo e punta per iniziare!</div>
+    </div>
+  </div>
 
-// ====== UI UPDATE ======
-function updateUI() {
-  document.getElementById('balance').textContent = state.balance;
-  document.getElementById('totalWon').textContent = state.totalWon;
-  document.getElementById('housesOwned').textContent = state.ownedHouses.length;
-  renderHouses();
-  save();
-}
+  <!-- ===== PAPERE ===== -->
+  <div class="section" id="papere-section">
+    <div class="panel">
+      <h2>🦆 Caccia alle Papere</h2>
+      <p class="desc">Clicca le papere volanti! Ogni papera = punti. Le papere d'oro valgono di più!</p>
 
-// ====== TAB SWITCH ======
-function switchTab(tab) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(tab + '-section').classList.add('active');
-  event.target.classList.add('active');
-}
+      <div class="duck-stats">
+        <div class="duck-stat">
+          <div class="s-label">Tempo</div>
+          <div class="s-value" id="duckTime">30s</div>
+        </div>
+        <div class="duck-stat">
+          <div class="s-label">Punteggio</div>
+          <div class="s-value" id="duckScore">0</div>
+        </div>
+        <div class="duck-stat">
+          <div class="s-label">Costo Partita</div>
+          <div class="s-value">€10</div>
+        </div>
+      </div>
 
-// ====== SLOT MACHINE ======
-let spinning = false;
+      <div class="duck-area" id="duckArea">
+        <div class="cloud" style="top:15%; animation-delay:0s;">☁️</div>
+        <div class="cloud" style="top:40%; animation-delay:-8s;">☁️</div>
+        <div class="cloud" style="top:60%; animation-delay:-15s;">☁️</div>
+      </div>
 
-function spin() {
-  if (spinning) return;
-
-  const bet = parseInt(document.getElementById('bet').value) || 0;
-  const msg = document.getElementById('message');
-
-  if (bet <= 0) {
-    msg.textContent = '⚠ Inserisci una puntata valida!';
-    msg.className = 'message lose';
-    return;
-  }
-
-  if (bet > state.balance) {
-    msg.textContent = '⚠ Saldo insufficiente!';
-    msg.className = 'message lose';
-    return;
-  }
-
-  spinning = true;
-  state.balance -= bet;
-  updateUI();
-
-  const slots = [
-    document.getElementById('slot1'),
-    document.getElementById('slot2'),
-    document.getElementById('slot3')
-  ];
-
-  slots.forEach(s => s.classList.add('spinning'));
-  msg.textContent = '🎰 Girando...';
-  msg.className = 'message';
-  document.getElementById('spinBtn').disabled = true;
-
-  // Animazione
-  const animInterval = setInterval(() => {
-    slots.forEach(s => {
-      s.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-    });
-  }, 80);
-
-  // Risultato finale
-  setTimeout(() => {
-    clearInterval(animInterval);
-    slots.forEach(s => s.classList.remove('spinning'));
-
-    const result = [
-      SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-      SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-      SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
-    ];
-
-    slots.forEach((s, i) => s.textContent = result[i]);
-
-    // Calcolo vincita
-    let win = 0;
-    if (result[0] === result[1] && result[1] === result[2]) {
-      if (result[0] === '7️⃣') win = bet * 10;
-      else if (result[0] === '💎') win = bet * 5;
-      else win = bet * 3;
-    } else if (result[0] === result[1] || result[1] === result[2] || result[0] === result[2]) {
-      win = bet * 2;
-    }
-
-    if (win > 0) {
-      state.balance += win;
-      state.totalWon += win - bet > 0 ? win - bet : 0;
-      msg.textContent = `✨ HAI VINTO €${win}! ✨`;
-      msg.className = 'message win';
-    } else {
-      msg.textContent = `😢 Hai perso €${bet}. Riprova!`;
-      msg.className = 'message lose';
-    }
-
-    spinning = false;
-    document.getElementById('spinBtn').disabled = false;
-    updateUI();
-  }, 1500);
-}
-
-function allIn() {
-  const betInput = document.getElementById('bet');
-  betInput.value = state.balance;
-}
-
-// ====== CASE ======
-function renderHouses() {
-  const grid = document.getElementById('housesGrid');
-  grid.innerHTML = '';
-
-  HOUSES.forEach(h => {
-    const owned = state.ownedHouses.includes(h.id);
-    const card = document.createElement('div');
-    card.className = 'house-card' + (owned ? ' owned' : '');
-    card.innerHTML = `
-      ${owned ? '<div class="owned-badge">✓ TUA</div>' : ''}
-      <div class="house-emoji">${h.emoji}</div>
-      <div class="house-name">${h.name}</div>
-      <div class="house-desc">${h.desc}</div>
-      <div class="house-price">€${h.price}</div>
-      <div class="house-income">${h.income}</div>
-      ${owned 
-        ? '<button class="btn" disabled style="background:#00aa00;">ACQUISTATA</button>'
-        : `<button class="btn" onclick="buyHouse('${h.id}')" ${state.balance < h.price ? 'disabled' : ''}>COMPRA</button>`
-      }
-    `;
-    grid.appendChild(card);
-  });
-}
-
-function buyHouse(id) {
-  const house = HOUSES.find(h => h.id === id);
-  if (!house) return;
-  if (state.ownedHouses.includes(id)) return;
-  if (state.balance < house.price) {
-    alert('Saldo insufficiente!');
-    return;
-  }
-  state.balance -= house.price;
-  state.ownedHouses.push(id);
-  updateUI();
-  alert(`🎉 Hai comprato: ${house.name}!`);
-}
-
-// ====== RESET ======
-function resetGame() {
-  if (confirm('Sei sicuro di voler resettare tutto? Perderai saldo e case!')) {
-    state = { balance: 100, totalWon: 0, ownedHouses: [] };
-    updateUI();
-    document.getElementById('message').textContent = 'Gioco resettato! Saldo: €100';
-    document.getElementById('message').className = 'message';
-  }
-}
-
-// ====== INIT ======
-load();
-updateUI();
-</script>
-
-</body>
-</html>
+      <div style="text-align:center; margin-top:15px;">
+        <button class="btn green" id="duckStartBtn" onclick="startDuckGame()">▶ IN
